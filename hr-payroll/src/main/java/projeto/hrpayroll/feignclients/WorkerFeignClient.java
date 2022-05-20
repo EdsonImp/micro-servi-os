@@ -11,7 +11,7 @@ import projeto.hrpayroll.entities.Worker;
 
 
 @Component //sera injetado em outras classes
-@FeignClient(name="hr-payroll", url="localhost:8001", path= "/workers")
+@FeignClient(name="hr-work", path= "/workers")
 public interface WorkerFeignClient {
 
 	@GetMapping (value= "/{id}")
