@@ -1,11 +1,13 @@
 package projeto.hrpayroll;
 
-import org.springframework.boot.SpringApplication; 
+import org.springframework.boot.SpringApplication;  
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@RibbonClient(name ="hr-work") //agora será cliente ribon, para balanceamento de requisiçoes
+//Nao precisa mais de ribom, o eukeca ja faz balanceamento de carga
+//@RibbonClient(name ="hr-work") //agora será cliente ribon, para balanceamento de requisiçoes
+@EnableEurekaClient
 @EnableFeignClients //precisa ser add dependencia no pom.xml e depois essa anotation
 @SpringBootApplication
 public class HrPayrollApplication {
