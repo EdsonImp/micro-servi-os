@@ -2,13 +2,19 @@ package com.edson.hroauth.entities;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+//será usada como userDetalhe do JWT security
 //copia da classe user par aaautenticação 
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
@@ -69,6 +75,33 @@ public class User implements Serializable {
 	}
 	public Set<Role> getRoles() {
 		return roles;
+	}
+	@Override//retorna a lista de permissões,
+	//faz um map do tipo list para granteAutority e coleta com collect
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles.stream().map(x-> new SimpleGrantedAuthority(x.getRoleName())).
+		collect(Collectors.toList());
+		
+	}
+	@Override //retorna o usser name, quqe nesse caso é o email
+	public String getUsername() {
+		return email;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+				return true;
 	}
 	
 
