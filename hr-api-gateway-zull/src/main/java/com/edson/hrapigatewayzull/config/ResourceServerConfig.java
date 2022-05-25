@@ -16,7 +16,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	//Esses string vao ser usados para liberar ou nao os caminhos, que foram pego la no properties do zuul
 	private final static String[] PUBLIC = {"/hr-oauth/oauth/token**"};
 	private final static String[] OPERATOR = {"/hr-work/**"};
-	private final static String[] ADMIN = {"/hr-payroll/**", "/hr-user/**"};
+	private final static String[] ADMIN = {"/hr-payroll/**", "/hr-user/**", "/actuator/**","/hr-work/actuator/**","/oauth/actuator/**"};
 	
 	@Autowired
 	private JwtTokenStore tokenstore;

@@ -1,6 +1,7 @@
 package com.edson.hroauth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,13 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
 
+	@Value("${oauth.client.name}")
+	private String privatName;
+	@Value("${oauth.client.secret}")
+	private String privatSecret;
+	
+	
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder; //implementada no appconfig
 	@Autowired
@@ -34,8 +42,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-		.withClient("myappname123")
-		.secret(passwordEncoder.encode("myappsecret123"))
+		.withClient(privatName)//pegando por variavel quqe vem do github application properties
+		.secret(passwordEncoder.encode(privatSecret)) //também pegando do git por variavel
 		.scopes("read","write")
 		.authorizedGrantTypes("password")
 		.accessTokenValiditySeconds(86000);
